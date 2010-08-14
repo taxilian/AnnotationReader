@@ -42,8 +42,7 @@ class AnnotatedClass extends \ReflectionClass {
         }
     }
 
-    public function getClassAnnotations() {
-        $str = $this->getDocComment();
+    protected function parseDocComment($str) {
         $annotations = array();
         $lines = explode("\n", $str);
         foreach ($lines as $line) {
@@ -51,5 +50,16 @@ class AnnotatedClass extends \ReflectionClass {
             $annotations = array_merge($annotations, $this->parseLine($line));
         }
         return $annotations;
+    }
+
+    public function getClassAnnotations() {
+        $str = $this->getDocComment();
+        return $this->parseDocComment($str);
+    }
+
+    public function getMethodAnnotations($methodName) {
+        $method = $this->getMethod($methodName);
+        $str = $method->getDocComment();
+        return $this->parseDocComment($str);
     }
 }

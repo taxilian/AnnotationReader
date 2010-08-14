@@ -13,11 +13,19 @@ use taxilian\AnnotationReader\AnnotatedClass;
  * @disallowOptions(PUT, DELETE)
  **/
 class TestClass {
-    
+    /**
+     * @var("GET", "a", "b", "c")
+     * @temporary
+     **/
+    public function init() {
+        
+    }
 };
 
 $ac = new AnnotatedClass("TestClass");
 
 $res = $ac->getClassAnnotations();
+$res2 = $ac->getMethodAnnotations("init");
 
 print_r($res);
+print_r($res2);
